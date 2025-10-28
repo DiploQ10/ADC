@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ADC.Infraestructure\ADC.Infraestructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="ADC.Persistence.Models.Enums" />
+  </ItemGroup>
+
+</Project>
