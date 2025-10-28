@@ -11,7 +11,12 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="LIN.Types" Version="1.6.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Using Include="LIN.Types.Responses" />
 	</ItemGroup>
 	
 </Project>
