@@ -14,4 +14,8 @@
     <Using Include="ADC.Persistence.Models.Enums" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>
