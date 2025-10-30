@@ -2,7 +2,7 @@
 
 namespace ADC.Domain.Responses;
 
-public class ReadOneResponse<M> : ResponseBase where M : new()
+public class ReadOneResponse<M> : ResponseBase
 {
 
     /// <summary>
@@ -16,7 +16,7 @@ public class ReadOneResponse<M> : ResponseBase where M : new()
     public ReadOneResponse()
     {
         Response = Responses.Undefined;
-        Model = new();
+        Model = default!;
     }
 
     public ReadOneResponse(M model)
@@ -31,7 +31,7 @@ public class ReadOneResponse<M> : ResponseBase where M : new()
     public ReadOneResponse(Responses response = Responses.Undefined)
     {
         Response = response;
-        Model = new();
+        Model = default!;
     }
 
     /// <summary>

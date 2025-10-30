@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: BD
+    environment:
+      - POSTGRES_BD=TaskManagerDB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres_password123
+    ports:
+      - "15432:5432"
