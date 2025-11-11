@@ -1,7 +1,7 @@
-﻿using ADC.Domain.Responses;
-using ADC.Persistence.Models;
+﻿using ADC.Domain.Entities;
+using ADC.Domain.Responses;
 
-namespace ADC.Persistence.Repositories;
+namespace ADC.Domain.Repositories;
 
 public interface IUserRepository
 {
@@ -9,6 +9,7 @@ public interface IUserRepository
     Task<ReadAllResponse<UserEntity>> GetAllAsync();
     Task<ReadOneResponse<UserEntity>> GetByIdAsync(Guid id);
     Task<ResponseBase> ExistAsync(Guid id);
+    Task<ReadOneResponse<UserEntity>> GetByEmail(string email);
     Task<ResponseBase> Update(UserEntity model);
     Task<ResponseBase> Delete(Guid id);
 }

@@ -1,6 +1,7 @@
 using ADC.Infraestructure;
 using ADC.Persistence;
 using ADC.Api.Extensions;
+using ADC.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddInfraestrure();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddSwaggerGen();
+builder.Services.AddDomain();
 
 var app = builder.Build();
 

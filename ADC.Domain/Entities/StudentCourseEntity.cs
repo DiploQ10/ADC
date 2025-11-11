@@ -1,4 +1,4 @@
-﻿namespace ADC.Persistence.Models;
+﻿namespace ADC.Domain.Entities;
 
 public class StudentCourseEntity : BaseEntity
 {

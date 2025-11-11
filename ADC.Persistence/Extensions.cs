@@ -1,4 +1,6 @@
-﻿using ADC.Persistence.Data;
+﻿using ADC.Domain.Repositories;
+using ADC.Persistence.Data;
+using ADC.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +15,7 @@ public static class Extensions
         service.AddDbContext<DataContext>(options =>
             options.UseNpgsql(configuration["ConnectionStrings:release"]));
 
-        service.AddScoped<Repositories.IUserRepository, Repositories.EF.UserRepository>();
+        service.AddScoped<IUserRepository, UserRepository>();
         return service;
     }
 

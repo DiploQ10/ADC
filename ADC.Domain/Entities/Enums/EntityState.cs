@@ -1,4 +1,4 @@
-﻿namespace ADC.Persistence.Models.Enums;
+﻿namespace ADC.Domain.Entities.Enums;
 
 public enum EntityState
 {

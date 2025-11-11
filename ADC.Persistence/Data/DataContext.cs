@@ -1,4 +1,4 @@
-﻿using ADC.Persistence.Models;
+﻿using ADC.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
 using System;

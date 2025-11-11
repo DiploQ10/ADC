@@ -1,9 +1,10 @@
-﻿using ADC.Domain.Responses;
+﻿using ADC.Domain.Entities;
+using ADC.Domain.Repositories;
+using ADC.Domain.Responses;
 using ADC.Persistence.Data;
-using ADC.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ADC.Persistence.Repositories.EF;
+namespace ADC.Persistence.Repositories;
 
 internal class UserRepository(DataContext context) : IUserRepository
 {
@@ -49,6 +50,15 @@ internal class UserRepository(DataContext context) : IUserRepository
     public async Task<ReadOneResponse<UserEntity>> GetByIdAsync(Guid id)
     {
         var user = context.Users.FirstOrDefault(t => t.Id == id);
+        if (user != null)
+            return new ReadOneResponse<UserEntity>(Responses.Success, user);
+
+        return new ReadOneResponse<UserEntity>(Responses.NotRows);
+    }
+
+    public async Task<ReadOneResponse<UserEntity>> GetByEmail(string email)
+    {
+        var user = context.Users.FirstOrDefault(t => t.Email == email);
         if (user != null)
             return new ReadOneResponse<UserEntity>(Responses.Success, user);
 

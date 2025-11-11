@@ -16,8 +16,4 @@
     <ProjectReference Include="..\ADC.Infraestructure\ADC.Infraestructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Using Include="ADC.Persistence.Models.Enums" />
-  </ItemGroup>
-
 </Project>
