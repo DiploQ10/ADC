@@ -1,10 +1,51 @@
+version: '3.8'
+
 services:
+  # Servicio de PostgreSQL
   postgres:
-    image: postgres:latest
-    container_name: BD
+    image: postgres:16-alpine
+    container_name: adc-postgres
     environment:
-      - POSTGRES_BD=TaskManagerDB
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres_password123
+      POSTGRES_DB: adc
+      POSTGRES_USER: alex
+      POSTGRES_PASSWORD: 1234
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-      - "15432:5432"
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - adc-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alex -d adc"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Servicio de la API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: adc-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__release: "Host=postgres;Port=5432;Database=adc;Username=alex;Password=1234"
+    ports:
+      - "5000:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - adc-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  adc-network:
+    driver: bridge

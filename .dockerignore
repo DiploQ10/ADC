@@ -1,0 +1,46 @@
+# Directorios de compilación
+**/bin/
+**/obj/
+**/out/
+
+# Archivos de Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+*.cache
+*.swp
+
+# Archivos de NuGet
+*.nupkg
+**/packages/
+
+# Archivos de prueba
+**/TestResults/
+**/*.trx
+
+# Archivos de Git
+.git/
+.gitignore
+.gitattributes
+
+# Archivos de Docker
+**/Dockerfile*
+**/docker-compose*
+.dockerignore
+
+# Archivos del sistema
+**/.DS_Store
+**/Thumbs.db
+
+# Archivos temporales
+**/*.log
+**/*.tmp
+**/*.temp
+
+# Node modules (si se usan)
+**/node_modules/
+
+# Archivos de documentación
+**/*.md
+!README.md
