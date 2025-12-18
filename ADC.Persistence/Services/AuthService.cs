@@ -56,14 +56,16 @@ public class AuthService : IAuthService
         return tokenHandler.WriteToken(token);
     }
 
-    public async Task<string> HashPasswordAsync(string password)
+    public Task<string> HashPasswordAsync(string password)
     {
-        return BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt(12));
+        // BCrypt is CPU-intensive, so we offload to a background thread
+        return Task.Run(() => BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt(12)));
     }
 
-    public async Task<bool> VerifyPasswordAsync(string password, string hash)
+    public Task<bool> VerifyPasswordAsync(string password, string hash)
     {
-        return BCrypt.Net.BCrypt.Verify(password, hash);
+        // BCrypt is CPU-intensive, so we offload to a background thread
+        return Task.Run(() => BCrypt.Net.BCrypt.Verify(password, hash));
     }
 
     public async Task<AuthResponse> RegisterAsync(UserRequest request)
@@ -92,8 +94,8 @@ public class AuthService : IAuthService
             Email = request.Email,
             Name = request.FirstName,
             LastName = request.LastName,
-            Password = passwordHash, // For backward compatibility
-            PasswordHash = passwordHash,
+            Password = passwordHash, // For backward compatibility with existing code
+            PasswordHash = passwordHash, // Primary field for authentication
             Role = "User",
             IsActive = true,
             IdentityDocument = string.Empty // Required field, set to empty
