@@ -1,3 +1,4 @@
+using ADC.Api.Configurations;
 using ADC.Infraestructure;
 using ADC.Persistence;
 using ADC.Api.Extensions;
@@ -7,9 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddAuthConfiguration(builder.Configuration);
 builder.Services.AddInfraestrure();
 builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerConfiguration();
 
 var app = builder.Build();
 
@@ -25,6 +27,7 @@ app.UseSwaggerDocumentation();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

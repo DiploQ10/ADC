@@ -55,6 +55,24 @@ internal class UserRepository(DataContext context) : IUserRepository
         return new ReadOneResponse<UserEntity>(Responses.NotRows);
     }
 
+    public async Task<ReadOneResponse<UserEntity>> GetByUsernameAsync(string username)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        if (user != null)
+            return new ReadOneResponse<UserEntity>(Responses.Success, user);
+
+        return new ReadOneResponse<UserEntity>(Responses.NotRows);
+    }
+
+    public async Task<ReadOneResponse<UserEntity>> GetByEmailAsync(string email)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (user != null)
+            return new ReadOneResponse<UserEntity>(Responses.Success, user);
+
+        return new ReadOneResponse<UserEntity>(Responses.NotRows);
+    }
+
     public async Task<ResponseBase> Update(UserEntity model)
     {
         throw new NotImplementedException();
