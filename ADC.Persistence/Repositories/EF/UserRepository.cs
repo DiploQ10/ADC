@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ADC.Persistence.Repositories.EF;
 
-internal class UserRepository(DataContext context) : IUserRepository
+public class UserRepository(DataContext context) : IUserRepository
 {
     public async Task<CreateResponse> CreateAsync(UserEntity model)
     {

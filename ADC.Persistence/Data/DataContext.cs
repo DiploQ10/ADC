@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ADC.Persistence.Data;
 
-internal class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
+public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
 {
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<CourseEntity> Courses { get; set; }
