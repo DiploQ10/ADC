@@ -102,6 +102,20 @@ namespace ADC.Tests.Services
             Assert.AreNotEqual(hash1, hash2);
         }
 
+        [TestMethod]
+        public async Task HashPasswordAsync_EmptyPassword_ReturnsHash()
+        {
+            // Arrange
+            var password = "";
+
+            // Act
+            var result = await AuthService.HashPasswordAsync(password);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsFalse(string.IsNullOrEmpty(result));
+        }
+
         #endregion
 
         #region VerifyPasswordAsync Tests
@@ -282,6 +296,33 @@ namespace ADC.Tests.Services
             Assert.AreNotEqual(request.Password, createdUser.PasswordHash);
         }
 
+        [TestMethod]
+        public async Task RegisterAsync_CreatesUserWithCorrectRole_Success()
+        {
+            // Arrange
+            var request = new UserRequest
+            {
+                Username = "testuser",
+                Email = "test@example.com",
+                Password = "TestPassword123",
+                FirstName = "Test",
+                LastName = "User"
+            };
+
+            // Act
+            var result = await AuthService.RegisterAsync(request);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(Responses.Success, result.Response);
+            
+            // Verify user has correct default role
+            var users = await UserRepository.GetAllAsync();
+            var createdUser = users.Models.FirstOrDefault(u => u.Username == request.Username);
+            Assert.IsNotNull(createdUser);
+            Assert.AreEqual("User", createdUser.Role);
+        }
+
         #endregion
 
         #region LoginAsync Tests
@@ -420,6 +461,40 @@ namespace ADC.Tests.Services
             Assert.IsNotNull(result.Token);
             Assert.IsTrue(result.Token.Length > 50); // JWT tokens are typically longer
             Assert.IsTrue(result.Token.Contains(".")); // JWT has 3 parts separated by dots
+        }
+
+        [TestMethod]
+        public async Task LoginAsync_ReturnsValidExpirationTime_Success()
+        {
+            // Arrange
+            var request = new LoginRequest
+            {
+                Username = "testuser",
+                Password = "TestPassword123"
+            };
+
+            var passwordHash = await AuthService.HashPasswordAsync(request.Password);
+            var userEntity = new ADC.Persistence.Models.UserEntity
+            {
+                Id = Guid.NewGuid(),
+                Username = request.Username,
+                Email = "test@example.com",
+                PasswordHash = passwordHash,
+                Role = "User",
+                Name = "Test",
+                LastName = "User",
+                IdentityDocument = "12345",
+                Password = ""
+            };
+
+            await UserRepository.CreateAsync(userEntity);
+
+            // Act
+            var result = await AuthService.LoginAsync(request);
+
+            // Assert
+            Assert.IsTrue(result.ExpiresAt > DateTime.UtcNow);
+            Assert.IsTrue(result.ExpiresAt < DateTime.UtcNow.AddHours(25)); // Should expire within 24 hours
         }
 
         #endregion

@@ -127,6 +127,19 @@ namespace ADC.Tests.Domain
             Assert.AreEqual("Admin", user.Role);
         }
 
+        [TestMethod]
+        public void FirstName_SetValidValue_UpdatesCorrectly()
+        {
+            // Arrange
+            var user = new User { Username = "test", Email = "test@test.com", PasswordHash = "hash" };
+
+            // Act
+            user.FirstName = "John";
+
+            // Assert
+            Assert.AreEqual("John", user.FirstName);
+        }
+
         #endregion
 
         #region Business Methods Tests
