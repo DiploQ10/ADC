@@ -9,20 +9,38 @@ using System.Threading.Tasks;
 
 namespace ADC.Persistence.Data;
 
-internal class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
+public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
 {
-
     public DbSet<UserEntity> Users { get; set; }
+    public DbSet<CourseEntity> Courses { get; set; }
+    public DbSet<SectionEntity> Sections { get; set; }
+    public DbSet<LessonEntity> Lessons { get; set; }
+    public DbSet<UserRoleEntity> UserRoles { get; set; }
+    public DbSet<StudentCourseEntity> StudentCourses { get; set; }
+    public DbSet<CourseFeedbackEntity> CourseFeedbacks { get; set; }
 
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Configurar índices únicos
+        modelBuilder.Entity<UserEntity>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
 
-        // Relaciones de las tablas.....
+        modelBuilder.Entity<UserEntity>()
+            .HasIndex(u => u.IdentityDocument)
+            .IsUnique();
 
+        // Configurar eliminación en cascada
+        modelBuilder.Entity<CourseEntity>()
+            .HasMany(c => c.Students)
+            .WithOne(sc => sc.Course)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        base.OnConfiguring(optionsBuilder);
+        modelBuilder.Entity<SectionEntity>()
+            .HasMany(s => s.Lessons)
+            .WithOne(l => l.Section)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        base.OnModelCreating(modelBuilder);
     }
-
-
 }

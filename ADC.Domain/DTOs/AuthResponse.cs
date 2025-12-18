@@ -5,13 +5,16 @@ namespace ADC.Domain.DTOs;
 public class AuthResponse : ResponseBase
 {
     public DateTime ExpiresAt { get; set; }
-    
-    public AuthResponse() : base() { }
-    
-    public AuthResponse(Responses.Responses response, string token, DateTime expiresAt, string message = "") : base(response)
+
+    public AuthResponse()
     {
+        Response = Responses.Responses.Undefined;
+    }
+
+    public AuthResponse(Responses.Responses response, string token, DateTime expiresAt)
+    {
+        Response = response;
         Token = token;
         ExpiresAt = expiresAt;
-        Message = message;
     }
 }

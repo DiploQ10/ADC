@@ -3,6 +3,7 @@
 public class UserEntity : BaseEntity
 {
     public string Username { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
     public required string Name { get; set; }
     public required string LastName { get; set; }
     public required string Email { get; set; } 
