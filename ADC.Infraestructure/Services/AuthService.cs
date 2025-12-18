@@ -112,18 +112,17 @@ public class AuthService : IAuthService
         // Create user entity
         var userEntity = new UserEntity
         {
-            Id = Guid.NewGuid(),
-            Username = request.Username,
-            Email = request.Email,
-            PasswordHash = passwordHash,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Name = request.FirstName,
+      Id = Guid.NewGuid(),
+ Username = request.Username,
+         Email = request.Email,
+      PasswordHash = passwordHash,
+         Name = request.FirstName,
+  LastName = request.LastName,
             IdentityDocument = string.Empty,
-            Password = string.Empty,
+     Password = passwordHash,
             Role = "User",
             CreatedAt = DateTime.UtcNow,
-            State = EntityState.Active
+          State = EntityState.Active
         };
 
         // Save user

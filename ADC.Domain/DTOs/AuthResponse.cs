@@ -17,4 +17,12 @@ public class AuthResponse : ResponseBase
         Token = token;
         ExpiresAt = expiresAt;
     }
+
+    public AuthResponse(Responses.Responses response, string token, DateTime expiresAt, string message)
+    {
+        Response = response;
+        Token = token;
+        ExpiresAt = expiresAt;
+        Message = message;
+    }
 }
