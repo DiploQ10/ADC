@@ -57,6 +57,21 @@ internal class UserRepository(DataContext context) : IUserRepository
 
     public async Task<ResponseBase> Update(UserEntity model)
     {
-        throw new NotImplementedException();
+        var existing = await context.Users.FindAsync(model.Id);
+        
+        if (existing == null || existing.State == Models.Enums.EntityState.Deleted)
+            return new ResponseBase(Responses.NotRows);
+        
+        existing.Name = model.Name;
+        existing.LastName = model.LastName;
+        existing.Email = model.Email;
+        existing.IdentityDocument = model.IdentityDocument;
+        existing.Birthday = model.Birthday;
+        
+        // No actualizar Password aquí - usar endpoint separado para cambio de contraseña
+        
+        await context.SaveChangesAsync();
+        
+        return new ResponseBase(Responses.Success);
     }
 }
