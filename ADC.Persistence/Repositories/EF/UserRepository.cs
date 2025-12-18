@@ -75,6 +75,8 @@ internal class UserRepository(DataContext context) : IUserRepository
 
     public async Task<ResponseBase> Update(UserEntity model)
     {
-        throw new NotImplementedException();
+        context.Users.Update(model);
+        await context.SaveChangesAsync();
+        return new ResponseBase(Responses.Success);
     }
 }
