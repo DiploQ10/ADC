@@ -11,6 +11,8 @@ public class UserEntity : BaseEntity
     public required string Password { get; set; }
     public string PasswordHash { get; set; } = string.Empty;
     public string Role { get; set; } = "User";
+    public bool IsActive { get; set; } = true;
+    public DateTime? LastLoginAt { get; set; }
     public List<UserRoleEntity> Roles { get; set; } = [];
     public DateOnly? Birthday { get; set; }
 }

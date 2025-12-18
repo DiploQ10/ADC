@@ -1,4 +1,5 @@
 ﻿using ADC.Persistence.Data;
+using ADC.Persistence.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ public static class Extensions
 
         // Registrar todos los repositorios
         service.AddScoped<Repositories.IUserRepository, Repositories.EF.UserRepository>();
+        service.AddScoped<IAuthService, AuthService>();
         service.AddScoped<Repositories.ICourseRepository, Repositories.EF.CourseRepository>();
         service.AddScoped<Repositories.ISectionRepository, Repositories.EF.SectionRepository>();
         service.AddScoped<Repositories.ILessonRepository, Repositories.EF.LessonRepository>();
