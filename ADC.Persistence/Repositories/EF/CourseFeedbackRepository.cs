@@ -33,10 +33,9 @@ internal class CourseFeedbackRepository(DataContext context) : ICourseFeedbackRe
     public async Task<ReadAllResponse<CourseFeedbackEntity>> GetByCourseIdAsync(Guid courseId)
     {
         var feedbacks = await context.CourseFeedbacks
-            .Where(f => f.State == EntityState.Active)
             .Include(f => f.Student)
                 .ThenInclude(s => s.Course)
-            .Where(f => f.Student.CourseId == courseId)
+            .Where(f => f.Student.CourseId == courseId && f.State == EntityState.Active)
             .ToListAsync();
         
         return new ReadAllResponse<CourseFeedbackEntity>(Responses.Success, feedbacks);

@@ -34,8 +34,9 @@ internal class StudentCourseRepository(DataContext context) : IStudentCourseRepo
     public async Task<ReadAllResponse<StudentCourseEntity>> GetByStudentIdAsync(Guid studentId)
     {
         var studentCourses = await context.StudentCourses
-            .Where(sc => sc.RoleId == studentId && sc.State == EntityState.Active)
+            .Where(sc => sc.Role.UserId == studentId && sc.State == EntityState.Active)
             .Include(sc => sc.Role)
+                .ThenInclude(r => r.User)
             .Include(sc => sc.Course)
             .ToListAsync();
         
