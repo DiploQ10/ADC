@@ -8,11 +8,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ADC.Domain\ADC.Domain.csproj" />
+    <ProjectReference Include="..\ADC.Persistence\ADC.Persistence.csproj" />
   </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="LIN.Types" Version="1.6.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
